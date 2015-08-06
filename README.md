@@ -1,3 +1,6 @@
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Myvar/OsDevKit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+
 # OsDevKit
 OSDevKit is a simplified, yet powerful OS development IDE. It supports ASM and C source files, with plenty of templates to give you a jump start in OS development.
 
