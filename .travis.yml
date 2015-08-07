@@ -2,11 +2,12 @@ language: csharp
 solution: Src/OsDevKit/OsDevKit.sln
 env:
   - MONO_IOMAP=case
-  - MONO_IOMAP=all
+  #- MONO_IOMAP-all
 mono:
   - latest
-  - 3.12.0
-  - 3.10.0
+  #- 3.12.0
+  #- 3.10.0
+  #- 3.8.0
 branches:
   only:
     - master
