@@ -2,11 +2,11 @@ language: csharp
 solution: Src/OsDevKit/OsDevKit.sln
 env:
   - MONO_IOMAP=case
+  - MONO_IOMAP=all
 mono:
   - latest
   - 3.12.0
   - 3.10.0
-  - 3.8.0
 branches:
   only:
     - master
@@ -18,4 +18,4 @@ notifications:
       # If you would like to be notified of build failures, add your email here
       - wordman05@gmail.com
     on_success: change #[always|never|change]
-    on_failure: always #[always|never|change]
+    on_failure: change #[always|never|change]
