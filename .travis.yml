@@ -1,0 +1,14 @@
+language: csharp
+solution: Src/OsDevKit/OsDevKit.sln
+branches:
+  only:
+    - master
+git:
+  submodules: false
+notifications:
+  email:
+    recipients:
+      # If you would like to be notified of build failures, add your email here
+      - wordman05@gmail.com
+    on_success: change #[always|never|change]
+    on_failure: always #[always|never|change]
