@@ -1,5 +1,7 @@
 language: csharp
 solution: Src/OsDevKit/OsDevKit.sln
+env:
+  - MONO_IOMAP=case
 branches:
   only:
     - master
