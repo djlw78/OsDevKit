@@ -8,9 +8,6 @@ mono:
   #- 3.12.0
   #- 3.10.0
   #- 3.8.0
-install:
-  - cd Src/OsDevKit
-  - nuget restore OsDevKit.sln
 branches:
   only:
     - master
