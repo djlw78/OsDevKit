@@ -1,5 +1,5 @@
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Myvar/OsDevKit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-[![Build Status](https://travis-ci.org/Myvar/OsDevKit.svg?branch=master)](https://travis-ci.org/Myvar/OsDevKito)
+[![Build Status](https://travis-ci.org/Myvar/OsDevKit.svg?branch=master)](https://travis-ci.org/Myvar/OsDevKit)
 
 # OsDevKit
 OSDevKit is a simplified, yet powerful OS development IDE. It supports ASM and C source files, with plenty of templates to give you a jump start in OS development.
