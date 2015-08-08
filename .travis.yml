@@ -21,5 +21,6 @@ notifications:
     recipients:
       # If you would like to be notified of build failures, add your email here
       - wordman05@gmail.com
+	  - myvarhd@gmail.com
     on_success: change #[always|never|change]
     on_failure: change #[always|never|change]
