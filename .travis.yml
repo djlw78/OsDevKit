@@ -2,7 +2,6 @@ language: csharp
 solution: OsDevKit.sln
 env:
   - MONO_IOMAP=case
-  - MONO_IOMAP-all
 mono:
   - latest
   #- 3.12.0
