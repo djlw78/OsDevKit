@@ -36,7 +36,8 @@ namespace OsDevKit.UI
             e.ChangedRange.SetStyle(Maroon, "#(.*)");
             e.ChangedRange.SetStyle(Green, "//(.*)");
 
-            e.ChangedRange.SetStyle(Blue, "auto|break|case|char|const|continue|default|do|double|enum|extern|float|for|goto|if|int|long|register|return|short|signed|sizeof|static|struct|switch|typedef|union|unsigned|void|volatile|while");
+            e.ChangedRange.SetStyle(Blue, "auto|break|case|char(\\s)+|const|continue|default|do|double(\\s)+|enum(\\s)+|extern|floa(\\s)+t|for|goto|" +
+                "if|int(\\s)+|long|register|return|short|signed|sizeof|static|struct|switch|typedef|union|unsigned|void(\\s)+|volatile|while");
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
