@@ -20,6 +20,9 @@ namespace OsDevKit.UI.Dialogs
             InitializeComponent();
         }
 
+
+        private List<string> Templates = new List<string>();
+
         private void button2_Click(object sender, EventArgs e)
         {
 
@@ -35,7 +38,7 @@ namespace OsDevKit.UI.Dialogs
 
         }
 
-        public void CreateProject(string name, string path, int Template)
+        public void CreateProject(string name, string path, string Template)
         {
             var d = new DirectoryInfo(path + "\\" + name);
             Directory.CreateDirectory(d.FullName );
@@ -68,7 +71,15 @@ namespace OsDevKit.UI.Dialogs
                 {
                     if (listBox1.SelectedIndex != -1)
                     {
-                        CreateProject(textBox1.Text,textBox2.Text, listBox1.SelectedIndex);
+                        if (Templates[listBox1.SelectedIndex].ToLower() != "null")
+                        {
+                            CreateProject(textBox1.Text, textBox2.Text, Templates[listBox1.SelectedIndex]);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please select a project template.");
+                        }
+
                     }
                     else
                     {
@@ -91,6 +102,17 @@ namespace OsDevKit.UI.Dialogs
 
         private void New_Project_Load(object sender, EventArgs e)
         {
+            foreach (var i in File.ReadAllText("Template.map").Replace("\r\n", "\n").Split('\n'))
+            {
+                if(!string.IsNullOrEmpty(i))
+                {
+                    string[] z = i.Split('~');
+                    listBox1.Items.Add(z[0]);
+                    Templates.Add(z[1]);
+                }
+
+            }
+
             listBox1.SelectedIndex = 0;
         }
     }

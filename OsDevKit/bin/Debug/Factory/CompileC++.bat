@@ -1,5 +1,5 @@
 setlocal
-set opt=-ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti
+set opt=-ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti -I %3
 cd Factory
 cd ..
 cd Tools

@@ -14,6 +14,12 @@ namespace OsDevKit
 
         public static void Compile()
         {
+            foreach (var i in Directory.GetFiles("Factory\\Build"))
+            {
+                File.Delete(i);
+            }
+
+
             if(Global.CurrentProjectFile == null)
             {
                 return;
@@ -26,7 +32,7 @@ namespace OsDevKit
                 {
                     StartProcces("Factory\\CompileC.bat", "" + Path.GetFullPath( Path.Combine(Global.CurrentProjectFilePath, "files" ,i)) + " " + new FileInfo(i).Name.Split('.').First() + " " + Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath,"files", "include")) , "Factory");
                 }
-                if (i.EndsWith(".c++"))
+                if (i.EndsWith(".c++") || i.EndsWith(".cpp"))
                 {
                     StartProcces("Factory\\CompileC++.bat", "" + Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath, "files", i)) + " " + new FileInfo(i).Name.Split('.').First() + " " + Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath, "files", "include")), "Factory");
                 }

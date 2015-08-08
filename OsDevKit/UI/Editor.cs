@@ -35,9 +35,15 @@ namespace OsDevKit.UI
             e.ChangedRange.SetStyle(Maroon, "\"(.*)\"");
             e.ChangedRange.SetStyle(Maroon, "#(.*)");
             e.ChangedRange.SetStyle(Green, "//(.*)");
+            e.ChangedRange.SetStyle(Green, "/\\*(.*)\\*/", System.Text.RegularExpressions.RegexOptions.Multiline);
 
             e.ChangedRange.SetStyle(Blue, "auto|break|case|char(\\s)+|const|continue|default|do|double(\\s)+|enum(\\s)+|extern|floa(\\s)+t|for|goto|" +
                 "if|int(\\s)+|long|register|return|short|signed|sizeof|static|struct|switch|typedef|union|unsigned|void(\\s)+|volatile|while");
+
+            e.ChangedRange.ClearFoldingMarkers();
+            //set folding markers
+            e.ChangedRange.SetFoldingMarkers("{", "}");
+            e.ChangedRange.SetFoldingMarkers(@"#region\b", @"#endregion\b");
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)

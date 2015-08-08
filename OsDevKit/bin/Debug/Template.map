@@ -1,0 +1,7 @@
+---------------[ C Templates ]----------------------------------~NULL
+Blank OS (C) - Blank os with only kmain.~CBlank
+Basic OS (C) - Basic os with data types and basic console write.~CBasic
+Debugger OS (C) - Basic OS but with OsKit Debugger suport(alpha)~CDebug
+---------------[ C++ Templates ]--------------------------------~NULL
+Blank OS (C++) - Blank os with only kmain.~CppBlank
+Basic OS (C++) - Basic os with data types and basic console write.~CppBasic
