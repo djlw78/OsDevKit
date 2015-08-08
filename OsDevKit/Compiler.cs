@@ -26,6 +26,10 @@ namespace OsDevKit
                 {
                     StartProcces("Factory\\CompileC.bat", "" + Path.GetFullPath( Path.Combine(Global.CurrentProjectFilePath, "files" ,i)) + " " + new FileInfo(i).Name.Split('.').First() + " " + Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath,"files", "include")) , "Factory");
                 }
+                if (i.EndsWith(".c++"))
+                {
+                    StartProcces("Factory\\CompileC++.bat", "" + Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath, "files", i)) + " " + new FileInfo(i).Name.Split('.').First() + " " + Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath, "files", "include")), "Factory");
+                }
                 if (i.EndsWith(".asm"))
                 {
                     StartProcces("Factory\\CompileAsm.bat", "" + Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath, "files", i)) + " " + new FileInfo(i).Name.Split('.').First(), "Factory");
