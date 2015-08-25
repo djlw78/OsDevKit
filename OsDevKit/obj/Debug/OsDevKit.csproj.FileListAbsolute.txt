@@ -36,3 +36,5 @@ C:\Users\Myvar\Documents\GitHub\OsDevKit\OsDevKit\obj\Debug\OsDevKit.csproj.Gene
 C:\Users\Myvar\Documents\GitHub\OsDevKit\OsDevKit\obj\Debug\OsDevKit.csprojResolveAssemblyReference.cache
 C:\Users\Myvar\Documents\GitHub\OsDevKit\OsDevKit\bin\Debug\FastColoredTextBox.dll
 C:\Users\Myvar\Documents\GitHub\OsDevKit\OsDevKit\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Myvar\Documents\GitHub\OsDevKit\OsDevKit\obj\Debug\OsDevKit.UI.BuildFileEditor.resources
+C:\Users\Myvar\Documents\GitHub\OsDevKit\OsDevKit\obj\Debug\OsDevKit.UI.Dialogs.NewBuildFileDialog.resources

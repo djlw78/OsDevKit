@@ -42,9 +42,22 @@ namespace OsDevKit.UI
                         }
 
                     }
+
+                    treeView1.Nodes.Add("Settings");
+                    foreach(var i in treeView1.Nodes)
+                    {
+                        if((i as TreeNode).Text == "Settings")
+                        {
+                            treeView1.Nodes[treeView1.Nodes.IndexOf(i as TreeNode)].Nodes.Add("BuildFile");
+                            break;
+                        }
+                    }
+                    
                     buffer = Global.CurrentProjectFile;
+
                     treeView1.ExpandAll();
                 }
+                
             }
 
         }
@@ -67,6 +80,13 @@ namespace OsDevKit.UI
             bool FoundMdiEditor = false;
             var sel = treeView1.SelectedNode.FullPath.Replace(Global.CurrentProjectFile.Name + "\\", "");
 
+            if(sel == "Settings\\BuildFile")
+            {
+                BuildFileEditor bfe = new BuildFileEditor();
+                bfe.MdiParent = this.MdiParent;
+                bfe.Show();
+                return;
+            }
             if (!sel.Contains("."))
             {
                 return;

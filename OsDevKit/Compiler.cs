@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,10 +13,65 @@ namespace OsDevKit
     public static class Compiler
     {
         public static string Log = "";
+        /*
+           {name} = only name;
+           {buildedname} = special name for build folder;
+           {filepath} = current file
+           {build} = build folder path with \
+           {img} = builded image file
+           {include} = include folder
+
+           {opt} = opt
+           {dls} = defuly linker sript,
+           {buildfilels} = custom linker script
+           {nasm} = nasm loc
+           {gcc} = gcc loc
+           {g++} = g++ loc
+           {fbc} = fbc loc
+           {ld} = ld loc
+           {git} = GrubImageTool loc
+           {qemu} = qemu loc
+       */
+
+        private static string BuildFolder = "./Factory\\Build";
+
+        private static string DoReplacements(string val, BuildStep stp, string fl)
+        {
+           
+            //val = val.Replace("","");
+            if (!string.IsNullOrEmpty(fl))
+            {
+                var f1 = new FileInfo(fl);
+
+                val = val.Replace("{name}",(f1.Name.Split('.')[0]));
+                val = val.Replace("{buildedname}", f1.Name.Split('.')[0] + DateTime.Now.ToFileTime() + ".o");
+                val = val.Replace("{filepath}", Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath, "files", fl)));
+                val = val.Replace("{build}", Path.GetFullPath(BuildFolder));
+                
+                var incl = Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath, "files", "include"));
+                val = val.Replace("{include}", incl);
+
+            }
+            var locimg = Path.Combine(Global.CurrentProjectFilePath, "Bin", "Boot.img");
+            val = val.Replace("{img}", Path.GetFullPath(locimg));
+            val = val.Replace("{opt}", stp.OPT);
+            val = val.Replace("{build}", BuildFolder + "\\");
+            val = val.Replace("{dls}", "./Factory\\linker.ld");
+            val = val.Replace("{buildfilels}", Global.CurrentBuildFile.LinkerScriptPath);
+            val = val.Replace("{nasm}", "./Factory\\nasm.exe");
+            val = val.Replace("{git}", "./Factory\\GrubImgTool.exe");
+            val = val.Replace("{gcc}", "./Tools\\bin\\gcc.exe");
+            val = val.Replace("{g++}", "./Tools\\bin\\g++.exe");
+            val = val.Replace("{ld}", "./Tools\\bin\\ld.exe");
+            val = val.Replace("{fcb}", "./freebasic\\fbc.exe");
+            val = val.Replace("{qemu}", "./Factory\\qemu\\qemu.exe");
+
+            return val;
+        }
 
         public static void Compile()
         {
-            if(!Directory.Exists("Factory\\Build"))
+            if (!Directory.Exists("Factory\\Build"))
             {
                 Directory.CreateDirectory("Factory\\Build");
             }
@@ -23,40 +80,53 @@ namespace OsDevKit
                 File.Delete(i);
             }
 
-
-            if(Global.CurrentProjectFile == null)
+            if (!Directory.Exists(Path.Combine(Global.CurrentProjectFilePath, "Bin")))
             {
-                return;
+                Directory.CreateDirectory(Path.Combine(Global.CurrentProjectFilePath, "Bin"));
             }
-            Global.OutPut = "";
-            Log = "";
-            foreach (var i in Global.CurrentProjectFile.Files)
+            foreach (var i in Directory.GetFiles(Path.Combine(Global.CurrentProjectFilePath, "Bin")))
             {
-                if(i.EndsWith(".c"))
+                File.Delete(i);
+            }
+            if (Global.CurrentBuildFile == null)
+            {
+                Global.CurrentBuildFile = JsonConvert.DeserializeObject<BuildFile>(File.ReadAllText("basic.buildfile"));
+
+            }
+
+            foreach (var i in Global.CurrentBuildFile.Steps)
+            {
+
+                string args = "";
+                foreach (var y in i.Args)
                 {
-                    StartProcces("Factory\\CompileC.bat", "" + Path.GetFullPath( Path.Combine(Global.CurrentProjectFilePath, "files" ,i)) + " " + new FileInfo(i).Name.Split('.').First() + " " + Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath,"files", "include")) , "Factory");
+                    args += DoReplacements(y, i, "") + " ";
                 }
-                if (i.EndsWith(".c++") || i.EndsWith(".cpp"))
+
+                if (i.OnceOfExecute)
                 {
-                    StartProcces("Factory\\CompileC++.bat", "" + Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath, "files", i)) + " " + new FileInfo(i).Name.Split('.').First() + " " + Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath, "files", "include")), "Factory");
-                }
-                if (i.EndsWith(".bas"))
-                {
-                    StartProcces("Factory\\CompileFreeBasic.bat", "" + Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath, "files", i)) + " " + new FileInfo(i).Name.Split('.').First() + " " + Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath, "files", "include")), "Factory");
-                }
-                if (i.EndsWith(".asm"))
-                {
-                    StartProcces("Factory\\CompileAsm.bat", "" + Path.GetFullPath(Path.Combine(Global.CurrentProjectFilePath, "files", i)) + " " + new FileInfo(i).Name.Split('.').First(), "Factory");
+                    StartProcces(DoReplacements(i.Exe, i, ""), DoReplacements(args, i, ""), "Factory", i.Waitfor);
 
                 }
+                else
+                {
+                    foreach (var z in Global.CurrentProjectFile.Files)
+                    {
+                        if (Regex.IsMatch("." + z.Split('.').Last(), i.FileType))
+                        {
+                            StartProcces(DoReplacements(i.Exe, i, z), DoReplacements(args, i, z), "Factory", i.Waitfor);
+                        }
+                    }
+                }
+                var locimg = Path.Combine(Global.CurrentProjectFilePath, "Bin", "Boot.img");
+                if (File.Exists("Boot.img"))
+                {
+                    File.Delete(locimg);
+                    File.Copy("Boot.img", locimg);
+                }
+
             }
-            StartProcces("Factory\\Link.bat","", Path.GetFullPath("Factory"));
-            StartProcces("Factory\\BuildBootImage.bat", "", Path.GetFullPath("Factory"));
-            var img = Path.Combine(Global.CurrentProjectFilePath, "Bin", "Boot.img");
-            File.Delete(img);
-            File.Copy("Factory\\Boot.img",img);
-            Application.DoEvents();
-            StartProcces("Factory\\Qemu.bat", img, Path.GetFullPath("Factory"),false);
+
 
         }
 
@@ -78,6 +148,7 @@ namespace OsDevKit
 
             p.StartInfo.FileName = name;
             p.StartInfo.Arguments = args;
+           // p.StartInfo.WorkingDirectory = ".";
 
             p.Start();
             if (waitfor)
@@ -90,16 +161,8 @@ namespace OsDevKit
             }
 
             var x =  p.StandardOutput.ReadToEnd() + "\n" + p.StandardError.ReadToEnd();
-            var ret = "";
-            string opt = "-w -m32 -Wall -O -fstrength-reduce  -finline-functions -fomit-frame-pointer -nostdinc -fno-builtin -I " + args.Split(' ').Last() +" -c -fno-strict-aliasing -fno-common -fno-stack-protector";
-            foreach (var i in x.Replace("\r\n", "\n").Split('\n'))
-            {
-                var l = i.Split('>').Last();
-                if (!l.StartsWith("cd ") && !l.StartsWith("del ") && !l.StartsWith("set") && !string.IsNullOrEmpty(l))
-                {
-                    ret += l.Replace(opt ,"{opt}") + Environment.NewLine;
-                }
-            }
+            var ret = x;
+            
            
             Global.OutPut += "----------------------------------------\n" + ret + "\n\n";
         }

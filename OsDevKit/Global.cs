@@ -12,6 +12,7 @@ namespace OsDevKit
     public static class Global
     {
         public static ProjectFile CurrentProjectFile { get; set; }
+        public static BuildFile CurrentBuildFile { get; set; }
         public static string CurrentProjectFilePath { get; set; }
         public static string OutPut = "";
         public static string DebugOutPut = "";
@@ -20,7 +21,10 @@ namespace OsDevKit
         public static void Save()
         {
             File.WriteAllText(Path.Combine(Global.CurrentProjectFilePath, Global.CurrentProjectFile.Name + ".proj"), JsonConvert.SerializeObject(Global.CurrentProjectFile));
+            if (CurrentBuildFile != null)
+            {
+                File.WriteAllText(Path.Combine(Global.CurrentProjectFilePath, Global.CurrentProjectFile.Name + ".buildfile"), JsonConvert.SerializeObject(Global.CurrentBuildFile));
+            }
         }
-
     }
 }

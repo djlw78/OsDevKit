@@ -60,6 +60,11 @@ namespace OsDevKit
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Global.CurrentProjectFile = JsonConvert.DeserializeObject<ProjectFile>(File.ReadAllText(dlg.FileName));
+                var buildfilepath = Path.Combine(new FileInfo(dlg.FileName).Directory.FullName, new FileInfo(dlg.FileName).Name.Split('.')[0] + ".buildfile");
+                if (File.Exists(buildfilepath))
+                {
+                    Global.CurrentBuildFile = JsonConvert.DeserializeObject<BuildFile>(File.ReadAllText(buildfilepath));
+                }
                 Global.CurrentProjectFilePath = new FileInfo (dlg.FileName).DirectoryName;
             }
 

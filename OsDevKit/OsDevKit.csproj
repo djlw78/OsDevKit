@@ -91,6 +91,12 @@
     <Compile Include="UI\Dialogs\New Project.Designer.cs">
       <DependentUpon>New Project.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Dialogs\NewBuildFileDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\NewBuildFileDialog.Designer.cs">
+      <DependentUpon>NewBuildFileDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Editor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Dialogs\New Project.resx">
       <DependentUpon>New Project.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\NewBuildFileDialog.resx">
+      <DependentUpon>NewBuildFileDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Editor.resx">
       <DependentUpon>Editor.cs</DependentUpon>
