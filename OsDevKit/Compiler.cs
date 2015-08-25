@@ -14,6 +14,10 @@ namespace OsDevKit
 
         public static void Compile()
         {
+            if(!Directory.Exists("Factory\\Build"))
+            {
+                Directory.CreateDirectory("Factory\\Build");
+            }
             foreach (var i in Directory.GetFiles("Factory\\Build"))
             {
                 File.Delete(i);

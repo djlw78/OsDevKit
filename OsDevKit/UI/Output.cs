@@ -27,5 +27,25 @@ namespace OsDevKit.UI
                 buff = Global.OutPut;
             }
         }
+
+        private void Output_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Output_MouseClick(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void Output_MouseMove(object sender, MouseEventArgs e)
+        {
+           
+        }
+
+        private void Output_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
+        }
     }
 }

@@ -55,6 +55,10 @@
             this.Controls.Add(this.richTextBox1);
             this.Name = "Output";
             this.Text = "Output";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Output_FormClosing);
+            this.Load += new System.EventHandler(this.Output_Load);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Output_MouseClick);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Output_MouseMove);
             this.ResumeLayout(false);
 
         }

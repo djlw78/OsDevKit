@@ -88,5 +88,20 @@ namespace OsDevKit.UI
                 }
             }
         }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fastColoredTextBox1.Copy();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fastColoredTextBox1.Paste();
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fastColoredTextBox1.Cut();
+        }
     }
 }

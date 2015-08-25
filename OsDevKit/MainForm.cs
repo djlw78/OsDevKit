@@ -34,9 +34,10 @@ namespace OsDevKit
             f.MdiParent = this;
             f.Show();
 
-            var f1 = new Output();
+            var f1 = new Output();            
             f1.MdiParent = this;
             f1.Show();
+            f1.Location = new Point(217, 0);
         }
 
         private void projectViewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -78,18 +79,7 @@ namespace OsDevKit
 
         private async void toolStripButton2_Click(object sender, EventArgs e)
         {
-            var f = new Debug();
-            f.MdiParent = this;
-            f.Show();
-            try
-            {
-                Global.SerialPipe.StartPipe();
-            }
-            catch(Exception ee)
-            {
-                Global.SerialPipe.StopPipe();
-                Global.DebugOutPut += "\n\n-------------------------------------------------------\n\n Gebugging pipe closed\n";
-            }
+            
 
         }
 
@@ -98,6 +88,30 @@ namespace OsDevKit
             var f = new Debug();
             f.MdiParent = this;
             f.Show();
+        }
+
+        private void startPipeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var f = new Debug();
+            f.MdiParent = this;
+            f.Show();
+            try
+            {
+                Global.SerialPipe.StartPipe();
+            }
+            catch (Exception ee)
+            {
+                Global.SerialPipe.StopPipe();
+                Global.DebugOutPut += "\n\n-------------------------------------------------------\n\n Gebugging pipe closed\n";
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if(!string.IsNullOrEmpty(Global.CurrentProjectFile?.Name))
+            {
+                this.Text = "OSDevKit - " + Global.CurrentProjectFile.Name;
+            }
         }
     }
 }
