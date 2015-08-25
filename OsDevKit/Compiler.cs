@@ -37,7 +37,6 @@ namespace OsDevKit
 
         private static string DoReplacements(string val, BuildStep stp, string fl)
         {
-           
             //val = val.Replace("","");
             if (!string.IsNullOrEmpty(fl))
             {
@@ -55,6 +54,7 @@ namespace OsDevKit
             var locimg = Path.Combine(Global.CurrentProjectFilePath, "Bin", "Boot.img");
             val = val.Replace("{img}", Path.GetFullPath(locimg));
             val = val.Replace("{opt}", stp.OPT);
+            val = val.Replace("{projectpath}", Global.CurrentProjectFilePath + "\\");
             val = val.Replace("{build}", BuildFolder + "\\");
             val = val.Replace("{dls}", "./Factory\\linker.ld");
             val = val.Replace("{buildfilels}", Global.CurrentBuildFile.LinkerScriptPath);
@@ -71,6 +71,10 @@ namespace OsDevKit
 
         public static void Compile()
         {
+            if (Global.CurrentProjectFile == null)
+            {
+                return;
+            }
             if (!Directory.Exists("Factory\\Build"))
             {
                 Directory.CreateDirectory("Factory\\Build");
@@ -164,11 +168,14 @@ namespace OsDevKit
                 return;
             }
 
+
             var x =  p.StandardOutput.ReadToEnd() + "\n" + p.StandardError.ReadToEnd();
             var ret = x;
             
            
             Global.OutPut += "----------------------------------------\n" + DoReplacements( st.OutPutRegex,st, fl) + "\n" + ret + "\n\n";
+            File.WriteAllText("Log.txt", Global.OutPut);
+            Application.DoEvents();
         }
     }
 }

@@ -118,5 +118,12 @@ namespace OsDevKit
                 this.Text = "OSDevKit - " + Global.CurrentProjectFile.Name;
             }
         }
+
+        private void importerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Importer imp = new Importer();
+            imp.MdiParent = this;
+            imp.Show();
+        }
     }
 }
