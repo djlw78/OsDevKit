@@ -88,10 +88,11 @@ namespace OsDevKit
             {
                 File.Delete(i);
             }
+            bool buidlfilefound = true;
             if (Global.CurrentBuildFile == null)
             {
                 Global.CurrentBuildFile = JsonConvert.DeserializeObject<BuildFile>(File.ReadAllText("basic.buildfile"));
-
+                buidlfilefound = false;
             }
 
             foreach (var i in Global.CurrentBuildFile.Steps)
@@ -105,7 +106,7 @@ namespace OsDevKit
 
                 if (i.OnceOfExecute)
                 {
-                    StartProcces(DoReplacements(i.Exe, i, ""), DoReplacements(args, i, ""), "Factory", i.Waitfor);
+                    StartProcces(DoReplacements(i.Exe, i, ""), DoReplacements(args, i, ""), "Factory",i,"", i.Waitfor);
 
                 }
                 else
@@ -114,7 +115,7 @@ namespace OsDevKit
                     {
                         if (Regex.IsMatch("." + z.Split('.').Last(), i.FileType))
                         {
-                            StartProcces(DoReplacements(i.Exe, i, z), DoReplacements(args, i, z), "Factory", i.Waitfor);
+                            StartProcces(DoReplacements(i.Exe, i, z), DoReplacements(args, i, z), "Factory",i, z, i.Waitfor);
                         }
                     }
                 }
@@ -126,11 +127,14 @@ namespace OsDevKit
                 }
 
             }
-
+            if (!buidlfilefound)
+            {
+                Global.CurrentBuildFile = null;
+            }
 
         }
 
-        public static void StartProcces(string name, string args, string path, bool waitfor = true)
+        public static void StartProcces(string name, string args, string path, BuildStep st,string fl, bool waitfor = true )
         {
 
 
@@ -164,7 +168,7 @@ namespace OsDevKit
             var ret = x;
             
            
-            Global.OutPut += "----------------------------------------\n" + ret + "\n\n";
+            Global.OutPut += "----------------------------------------\n" + DoReplacements( st.OutPutRegex,st, fl) + "\n" + ret + "\n\n";
         }
     }
 }

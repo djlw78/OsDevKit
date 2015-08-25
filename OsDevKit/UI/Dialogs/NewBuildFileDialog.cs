@@ -60,7 +60,7 @@ namespace OsDevKit.UI.Dialogs
                 Exe = "{nasm}",
                 FileType = ".asm",
                 Path = ".",
-                OutPutRegex = ""
+                OutPutRegex = "Compiled {name}:"
             });
             bf.Steps.Add(new BuildStep() {
                 Description = "Gcc - Compile all C files" ,
@@ -69,7 +69,8 @@ namespace OsDevKit.UI.Dialogs
                 Exe = "{gcc}" ,
                 FileType = ".c" ,
                 Path = ".",
-                OutPutRegex = ""});
+                OutPutRegex = "Compiled {name}:"
+            });
             bf.Steps.Add(new BuildStep()
             {
                 Description = "G++ - Compile all C++ files",
@@ -79,7 +80,7 @@ namespace OsDevKit.UI.Dialogs
                 Exe = "{g++}",
                 FileType = ".cpp|.c\\+\\+",
                 Path = ".",
-                OutPutRegex = ""
+                OutPutRegex = "Compiled {name}:"
             });
             bf.Steps.Add(new BuildStep()
             {
@@ -90,7 +91,7 @@ namespace OsDevKit.UI.Dialogs
                 Exe = "{fbc}",
                 FileType = ".bas",
                 Path = ".",
-                OutPutRegex = ""
+                OutPutRegex = "Compiled {name}:"
             });
             bf.Steps.Add(new BuildStep()
             {
@@ -102,7 +103,7 @@ namespace OsDevKit.UI.Dialogs
                 Exe = "{ld}",
                 FileType = ".o",
                 Path = ".",
-                OutPutRegex = ""
+                OutPutRegex = "Linker every thing:"
             });
             bf.Steps.Add(new BuildStep()
             {
@@ -114,7 +115,7 @@ namespace OsDevKit.UI.Dialogs
                 Exe = "{git}",
                 FileType = ".*+",
                 Path = ".",
-                OutPutRegex = ""
+                OutPutRegex = "Builded boot image:"
             });
             bf.Steps.Add(new BuildStep()
             {
@@ -127,7 +128,7 @@ namespace OsDevKit.UI.Dialogs
                 Exe = "{qemu}",
                 FileType = ".*+",
                 Path = ".",
-                OutPutRegex = ""
+                OutPutRegex = "Starteded Qemu"
             });
             Global.CurrentBuildFile = bf;
             Global.Save();
